@@ -2,7 +2,7 @@
 
 ### Tasks
 
-Task-1 : Counter App
-Task-2 : Signp + Login + Reset Screens
-Task-3 : Calculator
-Task-4 : Quiz 
+   1: Counter App
+   2 : Signp + Login + Reset Screens
+   3 : Calculator
+   4 : Quiz 
