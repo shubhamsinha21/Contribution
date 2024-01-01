@@ -1,4 +1,4 @@
-# Contribution is Key To growth. 
+# Contribution is Key To growth..
 
 ### Tasks
 
