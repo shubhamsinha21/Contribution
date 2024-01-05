@@ -2,7 +2,7 @@
 
 ### Tasks
 
-   - Counter App
-   - Login/Signup
-   - Calculator
-   - Quiz
+   - Counter App ✅
+   - Login/Signup ✅
+   - Calculator ✅
+   - Quiz 
