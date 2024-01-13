@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { HomeScreen } from './screens'
+import { HomeScreen, QuizScreen } from './screens'
 
 function App() {
 
   return (
     <>
-      <HomeScreen />
+      {/* <HomeScreen /> */}
+      <QuizScreen />
     </>
   )
 }
