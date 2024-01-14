@@ -1,13 +1,12 @@
 import React from 'react'
-import { View, Text } from 'react-native'
-import { HomeScreen } from './screens'
-
+import { NavigationContainer } from '@react-navigation/native'
+import MyStack from './navigation'
 function App() {
 
   return (
-    <>
-      <HomeScreen />
-    </>
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
   )
 }
 
