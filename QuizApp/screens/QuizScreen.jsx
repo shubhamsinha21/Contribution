@@ -1,7 +1,6 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-
-import React, { useEffect, useState } from 'react'
-
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Button, Title } from '../components';
 
 const shuffle = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -12,72 +11,105 @@ const shuffle = (array) => {
 };
 
 export default function QuizScreen({ navigation }) {
-
     const [questions, setQuestions] = useState();
     const [questionNumber, setQuestionNumber] = useState(0);
-    const [options, setOptions] = useState([])
-    const [score, setScore] = useState(0)
+    const [options, setOptions] = useState([]);
+    const [score, setScore] = useState(0);
+    const [selectedOption, setSelectedOption] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     const getData = async () => {
-        const url = 'https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple&encode=url3986';
-        const res = await fetch(url);
-        const data = await res.json();
-        setQuestions(data.results)
-        setOptions(generateShuffledOptions(data.results[0]))
-    }
+        setIsLoading(true)
+        try {
+            const url = 'https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple&encode=url3986';
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.results && data.results.length > 0) {
+                setQuestions(data.results);
+                setOptions(generateShuffledOptions(data.results[0]));
+            } else {
+                console.error("No questions found in the response.");
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+        setIsLoading(false)
+    };
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData();
+    }, []);
 
+    const handleNext = () => {
+        setQuestionNumber(questionNumber + 1);
+        setOptions(generateShuffledOptions(questions[questionNumber + 1]));
+        setSelectedOption(null)
+    };
 
-    const handleNextPress = () => {
-        setQuestionNumber(questionNumber + 1)
-        setOptions(generateShuffledOptions(questions[questionNumber + 1]))
+    const handleSkip = () => {
+        setQuestionNumber(questionNumber + 1);
+        setOptions(generateShuffledOptions(questions[questionNumber + 1]));
+        setSelectedOption(null)
     }
 
-
     const generateShuffledOptions = (_questions) => {
-        const options = [..._questions.correct_answer]
-        options.push(_questions.correct_answer)
-        shuffle(options)
-        return options
+        const options = [..._questions.incorrect_answers];
+        options.push(_questions.correct_answer);
+        shuffle(options);
+        return options;
+    };
+
+    const handleSelectedOption = (_option) => {
+        if (_option === questions[questionNumber].correct_answer) setScore(score + 10);
+        setSelectedOption(_option)
+    };
+
+    const handleQuizSubmission = () => {
+        navigation.navigate('Result', { score })
     }
     return (
         <>
-            {questions && (
-                <View>
-                    <View className='mx-1 my-16'>
-
-                        <Text className='text-2xl font-semibold text-black'>Q{questionNumber + 1}. {decodeURIComponent(questions[questionNumber].question)}</Text>
+            {isLoading ? <View className='flex justify-center items-center my-auto'>
+                <Title title='Loading...' />
+                <ActivityIndicator size={200} color='#996400' />
+            </View> : questions && (
+                <View className='mx-2'>
+                    <View className='my-8 h-24 mx-1'>
+                        <Text className='text-2xl font-semibold text-black'>
+                            Q{questionNumber + 1} . {decodeURIComponent(questions[questionNumber].question)}
+                        </Text>
                     </View>
-                    <View className='my-8 space-y-3 mx-2 '>
-                        <TouchableOpacity><Text className='bg-yellow-700 text-white px-2 py-2 mx-2 text-lg rounded-lg'>{decodeURIComponent(options[0])}</Text></TouchableOpacity>
-
-                        <TouchableOpacity><Text className='bg-yellow-700 text-white px-2 py-2 mx-2 text-lg rounded-lg'>{decodeURIComponent(options[1])}</Text></TouchableOpacity>
-
-                        <TouchableOpacity><Text className='bg-yellow-700 text-white px-2 py-2 mx-2 text-lg rounded-lg'>{decodeURIComponent(options[2])}</Text></TouchableOpacity>
-
-                        <TouchableOpacity><Text className='bg-yellow-700 text-white px-2 py-2 mx-2 text-lg rounded-lg'>{decodeURIComponent(options[3])}</Text></TouchableOpacity>
+                    <View className='flex justify-center my-16 space-y-3 h-60 '>
+                        {options.map((option, index) => (
+                            <TouchableOpacity key={index} onPress={() => handleSelectedOption(option)}
+                            >
+                                <Text
+                                    style={{ backgroundColor: selectedOption !== option ? '#996400' : 'red' }}
+                                    className='text-white p-3 mx-2 text-lg rounded-lg'>
+                                    {decodeURIComponent(option)}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
                     </View>
-                    <View className='flex flex-row justify-around my-24'>
-                        <TouchableOpacity onPress={() => navigation.navigate('Home')} >
-                            <Text className='text-white rounded-lg p-3 text-xl bg-yellow-700 w-28 text-center'>Previous</Text>
+                    <View className='flex flex-row justify-between mx-4 my-4'>
+
+                        <TouchableOpacity onPress={handleSkip}>
+                            <Button btnText='Skip' />
                         </TouchableOpacity>
 
                         {questionNumber < 9 ? (
-                            <TouchableOpacity onPress={handleNextPress}>
-                                <Text className='text-white rounded-lg p-3 text-xl bg-yellow-700 w-28 text-center'>Next</Text>
+                            <TouchableOpacity onPress={handleNext}>
+                                <Button btnText='Next' />
                             </TouchableOpacity>
                         ) : (
-                            <TouchableOpacity >
-                                <Text className='text-white rounded-lg p-3 text-xl bg-yellow-700 w-28 text-center'>Submit</Text>
+                            <TouchableOpacity onPress={handleQuizSubmission}>
+                                <Button btnText='Submit' />
                             </TouchableOpacity>
                         )}
                     </View>
                 </View>
             )}
-
         </>
-    )
+    );
 }
