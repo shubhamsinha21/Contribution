@@ -6,9 +6,9 @@ const Stack = createNativeStackNavigator();
 const MyStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-            <Stack.Screen name='Quiz' component={QuizScreen} options={{ headerShown: false }} />
-            <Stack.Screen name='Result' component={ResultScreen} options={{ headerShown: false }} />
+            <Stack.Screen name='Home' component={HomeScreen} options={{ headerShown: false, statusBarColor: '#996400' }} />
+            <Stack.Screen name='Quiz' component={QuizScreen} options={{ headerShown: false, statusBarColor: '#996400' }} />
+            <Stack.Screen name='Result' component={ResultScreen} options={{ headerShown: false, statusBarColor: '#996400' }} />
         </Stack.Navigator>
     )
 }

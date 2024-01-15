@@ -4,7 +4,7 @@ import React from 'react'
 const Button = ({ btnText }) => {
     return (
         <View>
-            <Text className='text-xl font-semibold bg-yellow-700 text-white mx-auto my-24 p-4 rounded-lg '>
+            <Text className='text-xl font-semibold bg-yellow-700 text-white mx-auto my-32 p-4 rounded-lg cursor-pointer'>
                 {btnText}
             </Text>
         </View>
