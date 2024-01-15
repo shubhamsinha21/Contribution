@@ -10,7 +10,7 @@ export default function HomeScreen({ navigation }) {
             <Title title='HistoryQuest' />
             <Banner banner={welcomeImg} />
             <TouchableOpacity onPress={() => navigation.navigate('Quiz')}>
-                <Button btnText='Start' />
+                <Button btnText='Start The Quest' />
             </TouchableOpacity>
         </ >
     )
