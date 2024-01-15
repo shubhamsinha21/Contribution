@@ -94,9 +94,11 @@ export default function QuizScreen({ navigation }) {
                     </View>
                     <View className='flex flex-row justify-between mx-4 my-4'>
 
-                        <TouchableOpacity onPress={handleSkip}>
-                            <Button btnText='Skip' />
-                        </TouchableOpacity>
+                        {questionNumber < 9 ? (
+                            <TouchableOpacity onPress={handleSkip}>
+                                <Button btnText='Skip' />
+                            </TouchableOpacity>
+                        ) : null}
 
                         {questionNumber < 9 ? (
                             <TouchableOpacity onPress={handleNext}>
