@@ -85,7 +85,7 @@ export default function QuizScreen({ navigation }) {
                             <TouchableOpacity key={index} onPress={() => handleSelectedOption(option)}
                             >
                                 <Text
-                                    style={{ backgroundColor: selectedOption !== option ? '#996400' : 'red' }}
+                                    style={{ backgroundColor: selectedOption !== option ? '#996400' : 'green' }}
                                     className='text-white p-3 mx-2 text-lg rounded-lg'>
                                     {decodeURIComponent(option)}
                                 </Text>
