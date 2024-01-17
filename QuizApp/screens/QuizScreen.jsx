@@ -42,8 +42,10 @@ export default function QuizScreen({ navigation }) {
     }, []);
 
     const handleNext = () => {
-        setQuestionNumber(questionNumber + 1);
-        setOptions(generateShuffledOptions(questions[questionNumber + 1]));
+        if (selectedOption) {
+            setQuestionNumber(questionNumber + 1);
+            setOptions(generateShuffledOptions(questions[questionNumber + 1]));
+        }
         setSelectedOption(null)
     };
 
