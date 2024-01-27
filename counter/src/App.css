@@ -1,9 +1,20 @@
-.counter-div{
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+.counter-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-button{
-margin-right: 10px;
+div h1 {
+  border: 2px solid black;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 50px;
+}
+button {
+  margin-right: 10px;
+  padding: 12px;
+  font-size: large;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: rgb(63, 66, 63);
 }
