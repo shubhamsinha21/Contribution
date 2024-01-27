@@ -1,0 +1,9 @@
+.counter-div{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+button{
+margin-right: 10px;
+}
